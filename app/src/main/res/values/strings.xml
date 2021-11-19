@@ -1,6 +1,13 @@
 <resources>
     <string name="app_name">WOF</string>
-    <string name="guessSpace">Gæt ordet!</string>
+    <string name="guessSpace">Indtast et bogstav!</string>
     <string name="wordPick">Drej Hjulet!</string>
     <string name="title">Velkommen til lykkehjulet, drej hjullet for at starte.</string>
+    <string-array name="words">
+        <item>Hjem</item>
+        <item>Mælk</item>
+        <item>Frankrig</item>
+        <item>Kaffe</item>
+        <item>Android</item>
+    </string-array>
 </resources>

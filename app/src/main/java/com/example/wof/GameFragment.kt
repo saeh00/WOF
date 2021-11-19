@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 
@@ -24,6 +25,7 @@ class GameFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var displayWordLength = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +43,19 @@ class GameFragment : Fragment() {
 
         val spinButton = view.findViewById<Button>(R.id.wordPicker)
         val guessField = view.findViewById<EditText>(R.id.guessBox)
+        val unknownWord = view.findViewById<TextView>(R.id.unknownWord)
         spinButton.setOnClickListener{
             guessField.visibility = View.VISIBLE
             spinButton.visibility = View.GONE
+
+            val wordsArr: Array<String> = resources.getStringArray(R.array.words)
+            val chosenWord = wordsArr.random()
+
+            repeat(chosenWord.length) {
+                displayWordLength += "_"
+            }
+
+            unknownWord.setText(displayWordLength)
 
         }
 
