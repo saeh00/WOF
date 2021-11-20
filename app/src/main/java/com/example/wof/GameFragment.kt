@@ -25,6 +25,7 @@ class GameFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var chosenWord = ""
     private var displayWordLength = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,18 +49,23 @@ class GameFragment : Fragment() {
             guessField.visibility = View.VISIBLE
             spinButton.visibility = View.GONE
 
-            val wordsArr: Array<String> = resources.getStringArray(R.array.words)
-            val chosenWord = wordsArr.random()
+            newGame()
 
-            repeat(chosenWord.length) {
-                displayWordLength += "_"
-            }
-
-            unknownWord.setText(displayWordLength)
+            unknownWord.text = displayWordLength
 
         }
 
         return view
+    }
+
+    fun newGame(){
+        val wordsArr: Array<String> = resources.getStringArray(R.array.words)
+        chosenWord = ""
+        chosenWord = wordsArr.random()
+
+        repeat(chosenWord.length) {
+            displayWordLength += "_"
+        }
     }
 
     companion object {

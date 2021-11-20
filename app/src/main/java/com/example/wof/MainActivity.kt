@@ -21,9 +21,6 @@ class MainActivity : AppCompatActivity() {
         val fm: FragmentManager = supportFragmentManager
         fm.beginTransaction().add(R.id.container,startFragment).commit()
 
-
-        //supportFragmentManager.beginTransaction().add(R.id.container, GameFragment()).commit()
-
     }
 
 }
