@@ -2,6 +2,7 @@
     <string name="app_name">WOF</string>
     <string name="guessSpace">Indtast et bogstav!</string>
     <string name="wordPick">Drej Hjulet!</string>
+    <string name="guessButton">Gæt!</string>
     <string name="title">Velkommen til lykkehjulet, drej hjullet for at starte.</string>
     <string-array name="words">
         <item>Hjem</item>

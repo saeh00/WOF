@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
 
@@ -25,6 +26,7 @@ class GameFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var guessedLetter = ""
     private var chosenWord = ""
     private var displayWordLength = ""
 
@@ -45,27 +47,59 @@ class GameFragment : Fragment() {
         val spinButton = view.findViewById<Button>(R.id.wordPicker)
         val guessField = view.findViewById<EditText>(R.id.guessBox)
         val unknownWord = view.findViewById<TextView>(R.id.unknownWord)
+        val guessButton = view.findViewById<Button>(R.id.guessButton)
+
         spinButton.setOnClickListener{
             guessField.visibility = View.VISIBLE
+            guessButton.visibility = View.VISIBLE
             spinButton.visibility = View.GONE
 
             newGame()
 
             unknownWord.text = displayWordLength
+            Toast.makeText(activity, chosenWord, Toast.LENGTH_SHORT).show()
+        }
 
+        guessButton.setOnClickListener{
+            guessedLetter = guessField.text.toString().lowercase()
+            guessField.text = null
+
+            checkGuess()
         }
 
         return view
     }
 
-    fun newGame(){
+    // This function starts the game
+    private fun newGame(){
+        // Chooses the word to be guessed from a given array in strings.xml
         val wordsArr: Array<String> = resources.getStringArray(R.array.words)
         chosenWord = ""
         chosenWord = wordsArr.random()
 
+        // Turn the length of the array into underscores, to represent the length of the word
         repeat(chosenWord.length) {
             displayWordLength += "_"
         }
+    }
+
+    private fun displayGuess(){
+
+    }
+
+    private fun checkGuess(){
+        val isGuessOneLetter: Boolean = guessedLetter.length == 1
+
+        if (isGuessOneLetter){
+            if (guessedLetter in chosenWord.lowercase()){
+                Toast.makeText(activity, "Hurra you guessed correct", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(activity, "You guessed incorrect", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            Toast.makeText(activity, "Please type one letter!", Toast.LENGTH_SHORT).show()
+        }
+
     }
 
     companion object {
