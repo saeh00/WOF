@@ -28,7 +28,7 @@ class GameFragment : Fragment() {
     private var param2: String? = null
     private var guessedLetter = ""
     private var chosenWord = ""
-    private var displayWordLength = ""
+    private var displayWord = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +56,7 @@ class GameFragment : Fragment() {
 
             newGame()
 
-            unknownWord.text = displayWordLength
+            unknownWord.text = displayWord
             Toast.makeText(activity, chosenWord, Toast.LENGTH_SHORT).show()
         }
 
@@ -65,12 +65,16 @@ class GameFragment : Fragment() {
             guessField.text = null
 
             checkGuess()
+
+            unknownWord.text = displayWord
         }
 
         return view
     }
 
-    // This function starts the game
+    /**
+     * This function starts a new game
+     */
     private fun newGame(){
         // Chooses the word to be guessed from a given array in strings.xml
         val wordsArr: Array<String> = resources.getStringArray(R.array.words)
@@ -79,27 +83,57 @@ class GameFragment : Fragment() {
 
         // Turn the length of the array into underscores, to represent the length of the word
         repeat(chosenWord.length) {
-            displayWordLength += "_"
+            displayWord += "_"
         }
     }
 
+    /**
+     * Updates the displayed word, with the correctly guessed characters
+     */
     private fun displayGuess(){
+        val guessedLetterIndex = chosenWord.indexesOf(guessedLetter, true)
 
+        when (guessedLetterIndex.size){
+            1 -> displayWord = displayWord.replaceRange(guessedLetterIndex[0],guessedLetterIndex[0]+1,guessedLetter)
+
+            2 -> {displayWord = displayWord.replaceRange(guessedLetterIndex[0],guessedLetterIndex[0]+1,guessedLetter)
+                displayWord = displayWord.replaceRange(guessedLetterIndex[1],guessedLetterIndex[1]+1,guessedLetter)}
+
+            3 -> {displayWord = displayWord.replaceRange(guessedLetterIndex[0],guessedLetterIndex[0]+1,guessedLetter)
+                displayWord = displayWord.replaceRange(guessedLetterIndex[1],guessedLetterIndex[1]+1,guessedLetter)
+                displayWord = displayWord.replaceRange(guessedLetterIndex[2],guessedLetterIndex[2]+1,guessedLetter)}
+        }
     }
 
+    /**
+     * Checks if the guess is a legitimate entry
+     * If the guess is legitimate it then checks if the guess is within the given word
+     */
     private fun checkGuess(){
         val isGuessOneLetter: Boolean = guessedLetter.length == 1
 
         if (isGuessOneLetter){
             if (guessedLetter in chosenWord.lowercase()){
-                Toast.makeText(activity, "Hurra you guessed correct", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "Hurra, you guessed correct", Toast.LENGTH_SHORT).show()
+                displayGuess()
             } else {
-                Toast.makeText(activity, "You guessed incorrect", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, "SMH, You guessed incorrect", Toast.LENGTH_SHORT).show()
             }
         } else {
             Toast.makeText(activity, "Please type one letter!", Toast.LENGTH_SHORT).show()
         }
+    }
 
+    /**
+     * Funktionen kan finde indexes af substring i et string.
+     * taget fra stackoverflow
+     * link: https://stackoverflow.com/questions/62189457/get-indexes-of-substrings-contained-in-a-string-in-kotlin-way
+    */
+    private fun String?.indexesOf(substr: String, ignoreCase: Boolean = true): List<Int> {
+        return this?.let {
+            val regex = if (ignoreCase) Regex(substr, RegexOption.IGNORE_CASE) else Regex(substr)
+            regex.findAll(this).map { it.range.start }.toList()
+        } ?: emptyList()
     }
 
     companion object {
