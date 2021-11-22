@@ -13,7 +13,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+/*
         startButton = findViewById(R.id.startButton)
 
         //add the fragment here
@@ -21,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         val fm: FragmentManager = supportFragmentManager
         fm.beginTransaction().add(R.id.container,startFragment).commit()
 
+
+ */
     }
 
 }

@@ -11,6 +11,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.Navigation
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,6 +72,9 @@ class GameFragment : Fragment() {
 
             println(unknownWord.text)
             checkWinner(unknownWord.text as String)
+            if (gameWon){
+                Navigation.findNavController(view).navigate(R.id.action_gameWon)
+            }
         }
 
         return view
@@ -129,10 +133,7 @@ class GameFragment : Fragment() {
     }
 
     private fun checkWinner(unknownWord: String) {
-        val chars = unknownWord.toCharArray()
-        for (c in chars) {
-            gameWon = Character.isLetter(c)
-        }
+        gameWon = unknownWord.chars().allMatch(Character::isLetter)
 
         if (gameWon){
             Toast.makeText(activity, "You won", Toast.LENGTH_SHORT).show()
