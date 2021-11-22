@@ -26,6 +26,7 @@ class GameFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var gameWon: Boolean = false
     private var guessedLetter = ""
     private var chosenWord = ""
     private var displayWord = ""
@@ -67,6 +68,9 @@ class GameFragment : Fragment() {
             checkGuess()
 
             unknownWord.text = displayWord
+
+            println(unknownWord.text)
+            checkWinner(unknownWord.text as String)
         }
 
         return view
@@ -121,6 +125,17 @@ class GameFragment : Fragment() {
             }
         } else {
             Toast.makeText(activity, "Please type one letter!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkWinner(unknownWord: String) {
+        val chars = unknownWord.toCharArray()
+        for (c in chars) {
+            gameWon = Character.isLetter(c)
+        }
+
+        if (gameWon){
+            Toast.makeText(activity, "You won", Toast.LENGTH_SHORT).show()
         }
     }
 
