@@ -4,6 +4,13 @@
     <string name="wordPick">Drej Hjulet!</string>
     <string name="guessButton">Gæt!</string>
     <string name="title">Velkommen til lykkehjulet, drej hjullet for at starte.</string>
+    <string name="spin">Spin!</string>
+    <string-array name="category">
+        <item>Dyr</item>
+        <item>Sport</item>
+        <item>Mad</item>
+        <item>Geografi</item>
+    </string-array>
     <string-array name="words">
         <item>Hjem</item>
         <item>Mælk</item>
