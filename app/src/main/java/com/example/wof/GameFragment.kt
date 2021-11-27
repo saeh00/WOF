@@ -1,86 +1,85 @@
 package com.example.wof
 
-import android.app.Activity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.core.view.isVisible
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentTransaction
+import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [GameFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-    var gameWon: Boolean = false
-    var spinState: Boolean = true
+    private var gameWon: Boolean = false
+    private var gameLoss: Boolean = false
+    private var spinState: Boolean = true
+    private var guessResult: Boolean = false
     private var guessedLetter = ""
     private var chosenWord = ""
     private var displayWord = ""
     private var category = ""
-    private var lives = 5
-    private var points = 700
+    private var lives: Int? = null
+    private var points: Int? = null
     private var spinResult: Int? = null
+    private var spinResultText = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_game, container, false)
-        val model by lazy { activity?.let { ViewModelProviders.of(it).get(Communicator::class.java) } }
+        val model by lazy {
+            activity?.let {
+                ViewModelProviders.of(it).get(Communicator::class.java)
+            }
+        }
 
-        val spinButton = view.findViewById<Button>(R.id.wordPicker)
         val guessField = view.findViewById<EditText>(R.id.guessBox)
         val unknownWord = view.findViewById<TextView>(R.id.unknownWord)
         val guessButton = view.findViewById<Button>(R.id.guessButton)
         val categoryText = view.findViewById<TextView>(R.id.categoryView)
-        val wheelImg = view.findViewById<ImageView>(R.id.wheelImg)
+        val spinBtn = view.findViewById<CardView>(R.id.spinButton)
+        val livesText = view.findViewById<TextView>(R.id.livesView)
+        val pointsText = view.findViewById<TextView>(R.id.pointView)
+        val spinView = view.findViewById<TextView>(R.id.spinResultView)
 
-        spinButton.setOnClickListener {
-            guessField.visibility = View.VISIBLE
-            guessButton.visibility = View.VISIBLE
-            spinButton.visibility = View.GONE
+        // Initialize the game
+        newGame()
+        livesText.text = lives.toString()
+        pointsText.text = points.toString()
 
-            newGame()
-
-            unknownWord.text = displayWord
-            categoryText.text = category
-            Toast.makeText(activity, chosenWord, Toast.LENGTH_SHORT).show()
-        }
+        unknownWord.text = displayWord
+        categoryText.text = category
+        Toast.makeText(activity, chosenWord, Toast.LENGTH_SHORT).show()
 
         guessButton.setOnClickListener {
             if (spinState) {
                 Toast.makeText(activity, "Please spin the wheel first!", Toast.LENGTH_SHORT).show()
             } else {
+
+                // Takes the text the player entered in the textfield, and puts int in the variable guessedLetter
+                // Resets the textfield
                 guessedLetter = guessField.text.toString().lowercase()
                 guessField.text = null
 
                 checkGuess()
+                livesText.text = lives.toString()
+                pointsText.text = points.toString()
 
                 unknownWord.text = displayWord
 
-                println(unknownWord.text)
-
-                checkWinner(unknownWord.text as String)
+                checkWin(unknownWord.text as String)
+                checkLoss()
 
                 if (gameWon) {
                     Navigation.findNavController(view).navigate(R.id.action_gameWon)
                     model?.points = points
+                }
+
+                if (gameLoss) {
+                    Navigation.findNavController(view).navigate(R.id.action_gameLost)
                 }
             }
 
@@ -88,17 +87,23 @@ class GameFragment : Fragment() {
         }
 
 
-        wheelImg.setOnClickListener {
+        spinBtn.setOnClickListener {
             spinWheel()
+            spinView.text = spinResultText
+            pointsText.text = points.toString()
+            livesText.text = lives.toString()
         }
 
         return view
+
     }
 
     /**
      * This function starts a new game
      */
     private fun newGame() {
+        lives = 5
+        points = 0
         // Chooses the word to be guessed from a given array in strings.xml
         val wordsArr: Array<String> = resources.getStringArray(R.array.words)
         val catArr: Array<String> = resources.getStringArray(R.array.category)
@@ -115,18 +120,52 @@ class GameFragment : Fragment() {
     }
 
     private fun spinWheel() {
-        val randInt = (0..4).random()
-        spinResult = null
-        spinResult = randInt
+        if (spinState) {
+            val randInt = (0..15).random()
+            spinResult = null
+            spinResult = randInt
 
-        when (spinResult) {
-            0 -> Toast.makeText(activity, "0", Toast.LENGTH_SHORT).show()
-            1 -> Toast.makeText(activity, "1", Toast.LENGTH_SHORT).show()
-            2 -> Toast.makeText(activity, "2", Toast.LENGTH_SHORT).show()
-            3 -> Toast.makeText(activity, "3", Toast.LENGTH_SHORT).show()
-            4 -> Toast.makeText(activity, "4", Toast.LENGTH_SHORT).show()
+            when (spinResult) {
+                0, 1 -> {// Player loses a life
+                    lives = lives?.minus(1)
+                    spinResultText = "Player loses a life"
+                    spinState = true
+                }
+                2, 3 -> {// Player gains a life
+                    lives = lives?.plus(1)
+                    spinResultText = "Player gains a life"
+                    spinState = true
+                }
+                4 -> {// Player Loses all points
+                    points = 0
+                    spinResultText = "Player loses all points"
+                    spinState = true
+                }
+                6, 7 -> {// Player gains a 1000 points
+                    spinResultText = "Player gains 1000 points"
+                    spinState = false
+                }
+                8, 9 -> {// Player lose 500 points
+                    spinResultText = "Player loses 500 points"
+                    spinState = false
+                }
+                10 -> {// Jackpot! Player gains 10000 points
+                    spinResultText = "Player gains 10000 points"
+                    spinState = false
+                }
+                else -> {// Standard outcome, player gains 100 points
+                    spinResultText = "Player gains 100 points"
+                    spinState = false
+                }
+            }
+        } else {
+            Toast.makeText(
+                activity,
+                "cannot spin the wheel twice, guess a letter first!",
+                Toast.LENGTH_SHORT
+            ).show()
         }
-        spinState = false
+        guessResult = false
     }
 
     /**
@@ -186,19 +225,33 @@ class GameFragment : Fragment() {
             if (guessedLetter in chosenWord.lowercase()) {
                 Toast.makeText(activity, "Hurra, you guessed correct", Toast.LENGTH_SHORT).show()
                 displayGuess()
+                when (spinResult) {
+                    6, 7 -> points = points?.plus(1000)
+                    8, 9 -> points = points?.minus(500)
+                    10 -> points = points?.plus(10000)
+                    else -> points = points?.plus(100)
+                }
             } else {
                 Toast.makeText(activity, "SMH, You guessed incorrect", Toast.LENGTH_SHORT).show()
+                lives = lives?.minus(1)
             }
+            spinState = true
         } else {
             Toast.makeText(activity, "Please type one letter!", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun checkWinner(unknownWord: String) {
+    private fun checkWin(unknownWord: String) {
         gameWon = unknownWord.chars().allMatch(Character::isLetter)
 
         if (gameWon) {
             Toast.makeText(activity, "You won", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun checkLoss(){
+        if (lives == 0){
+            gameLoss = true
         }
     }
 

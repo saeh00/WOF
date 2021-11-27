@@ -1,15 +1,16 @@
 <resources>
     <string name="app_name">s205470 Lykkehjulet</string>
-    <string name="guessSpace">Indtast et bogstav!</string>
+    <string name="guessSpace">Insert a letter!</string>
     <string name="wordPick">Drej Hjulet!</string>
     <string name="guessButton">Gæt!</string>
     <string name="title">Velkommen til lykkehjulet, drej hjullet for at starte.</string>
     <string name="spin">Spin!</string>
+    <string name="spinOutcome">Here is where the result of the spin will be displayed.</string>
     <string-array name="category">
-        <item>Dyr</item>
+        <item>Animal</item>
         <item>Sport</item>
-        <item>Mad</item>
-        <item>Geografi</item>
+        <item>Food</item>
+        <item>Geography</item>
     </string-array>
     <string-array name="words">
         <item>Hjem</item>
