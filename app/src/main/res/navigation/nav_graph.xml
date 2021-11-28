@@ -32,7 +32,7 @@
         android:label="fragment_game_won"
         tools:layout="@layout/fragment_game_won" >
         <action
-            android:id="@+id/action_gameWonFragment_to_gameFragment"
+            android:id="@+id/action_playAgainW"
             app:destination="@id/gameFragment" />
     </fragment>
     <fragment
@@ -41,7 +41,7 @@
         android:label="fragment_game_lost"
         tools:layout="@layout/fragment_game_lost" >
         <action
-            android:id="@+id/action_gameLostFragment_to_gameFragment"
+            android:id="@+id/action_playAgainL"
             app:destination="@id/gameFragment" />
     </fragment>
 </navigation>

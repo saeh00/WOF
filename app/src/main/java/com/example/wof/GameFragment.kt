@@ -67,6 +67,7 @@ class GameFragment : Fragment() {
                 checkGuess()
                 livesText.text = lives.toString()
                 pointsText.text = points.toString()
+                spinView.text = spinResultText
 
                 unknownWord.text = displayWord
 
@@ -146,8 +147,9 @@ class GameFragment : Fragment() {
                     spinState = false
                 }
                 8, 9 -> {// Player lose 500 points
+                    points = points?.minus(500)
                     spinResultText = "Player loses 500 points"
-                    spinState = false
+                    spinState = true
                 }
                 10 -> {// Jackpot! Player gains 10000 points
                     spinResultText = "Player gains 10000 points"
@@ -227,7 +229,6 @@ class GameFragment : Fragment() {
                 displayGuess()
                 when (spinResult) {
                     6, 7 -> points = points?.plus(1000)
-                    8, 9 -> points = points?.minus(500)
                     10 -> points = points?.plus(10000)
                     else -> points = points?.plus(100)
                 }
@@ -235,6 +236,7 @@ class GameFragment : Fragment() {
                 Toast.makeText(activity, "SMH, You guessed incorrect", Toast.LENGTH_SHORT).show()
                 lives = lives?.minus(1)
             }
+            spinResultText = ""
             spinState = true
         } else {
             Toast.makeText(activity, "Please type one letter!", Toast.LENGTH_SHORT).show()
