@@ -15,16 +15,38 @@
         <item>Animals</item>
         <item>Sports</item>
         <item>Food</item>
-        <item>Geography</item>
+        <item>Countries</item>
     </string-array>
 
-    <string-array name="words">
-        <item>Hjem</item>
-        <item>Mælk</item>
-        <item>Frankrig</item>
-        <item>Kaffe</item>
-        <item>Android</item>
+    <string-array name="Animals">
+        <item>Horse</item>
+        <item>Rabbit</item>
+        <item>Salmon</item>
+        <item>Crab</item>
+        <item>Kangaroo</item>
     </string-array>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="Sports">
+        <item>Football</item>
+        <item>Rugby</item>
+        <item>Tabletennis</item>
+        <item>Boxing</item>
+        <item>Marathon</item>
+    </string-array>
+
+    <string-array name="Food">
+        <item>Spaghetti</item>
+        <item>Pizza</item>
+        <item>Burger</item>
+        <item>Sushi</item>
+        <item>Biryani</item>
+    </string-array>
+
+    <string-array name="Countries">
+        <item>Slovakia</item>
+        <item>Argentina</item>
+        <item>Palestine</item>
+        <item>Iraq</item>
+        <item>Denmark</item>
+    </string-array>
 </resources>

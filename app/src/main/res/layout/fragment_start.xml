@@ -28,4 +28,12 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_list" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="602dp"
+        tools:text="Welcome to the wheel of fortune, please pick a category before starting the game." />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
