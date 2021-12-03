@@ -1,5 +1,6 @@
 package com.example.wof
 
+import android.content.res.Resources
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -108,11 +109,16 @@ class GameFragment : Fragment() {
     private fun newGame() {
         lives = 5
         points = 0
+        var wordsArr: Array<String>? = null
         // Chooses the word to be guessed from a given array in strings.xml
-        val wordsArr: Array<String> = resources.getStringArray(R.array.words)
-        val catArr: Array<String> = resources.getStringArray(R.array.category)
+        when(category){
+            "Animals" -> wordsArr = resources.getStringArray(R.array.Animals)
+            "Sports" -> wordsArr = resources.getStringArray(R.array.Sports)
+            "Food" -> wordsArr = resources.getStringArray(R.array.Food)
+            "Countries" -> wordsArr = resources.getStringArray(R.array.Countries)
+        }
         chosenWord = ""
-        chosenWord = wordsArr.random()
+        chosenWord = wordsArr?.random().toString()
 
         // Turn the length of the array into underscores, to represent the length of the word
         repeat(chosenWord.length) {

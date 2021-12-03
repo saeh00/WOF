@@ -37,7 +37,7 @@ class CategoryAdapter(var arrayList: ArrayList<String>) :
                     0 -> category = "Animals"
                     1 -> category = "Sports"
                     2 -> category = "Food"
-                    3 -> category = "Geography"
+                    3 -> category = "Countries"
                 }
 
             }
