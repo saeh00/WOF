@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 
@@ -24,10 +25,10 @@ class GameWonFragment : Fragment() {
             }
         }
 
-        //val testCommunicator = view.findViewById<Button>(R.id.testViewModel)
         val playAgainBtn = view.findViewById<Button>(R.id.playAgain)
+        val highScore = view.findViewById<TextView>(R.id.highScoreView)
 
-        //testCommunicator.setOnClickListener{Toast.makeText(activity, model?.points.toString(), Toast.LENGTH_SHORT).show()}
+        highScore.text = resources.getString(R.string.highScore) + model?.points.toString()
 
         playAgainBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_playAgainW)

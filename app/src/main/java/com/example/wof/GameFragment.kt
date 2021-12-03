@@ -146,7 +146,7 @@ class GameFragment : Fragment() {
                 2 -> {// Player Loses all points
                     points = 0
                     spinResultText =
-                        "You lose all your points (if you have minus points you go to 0 yaaay!),\nSpin again!"
+                        "Bankrupt, you lose all your points, \nSpin again!"
                     spinState = true
                 }
                 in 3..7 -> {// Player gains a 1000 points
@@ -159,7 +159,7 @@ class GameFragment : Fragment() {
                     spinState = true
                 }
                 10 -> {// Jackpot! Player gains 10000 points
-                    spinResultText = "Player gains 10000 points,\n" +
+                    spinResultText = "Jackpot, player gains 10000 points,\n" +
                             "If you guess correct though"
                     spinState = false
                 }
