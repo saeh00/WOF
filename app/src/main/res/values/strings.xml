@@ -7,14 +7,17 @@
     <string name="spin">Spin!</string>
     <string name="win">YOU WIN!</string>
     <string name="lose">YOU LOSE!</string>
+    <string name="wrongGuess">Wrong guesses:</string>
     <string name="playAgain">Play Again</string>
     <string name="spinOutcome">Here is where the result of the spin will be displayed. \n Start by pressing spin</string>
+
     <string-array name="category">
-        <item>Animal</item>
-        <item>Sport</item>
+        <item>Animals</item>
+        <item>Sports</item>
         <item>Food</item>
         <item>Geography</item>
     </string-array>
+
     <string-array name="words">
         <item>Hjem</item>
         <item>Mælk</item>

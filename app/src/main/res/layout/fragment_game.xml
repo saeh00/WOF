@@ -181,7 +181,7 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="You will recieve 10000 points if you guess correct!" />
+            tools:text=" You lose all your points (if you have minus points you go to 0 yaaay!)" />
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
@@ -206,5 +206,37 @@
             android:textSize="25sp"
             tools:text="_____" />
     </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="#BEECDC"
+        app:layout_constraintBottom_toTopOf="@+id/cardView4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/wrongGuessView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="4dp"
+            android:layout_marginRight="4dp"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:text="a, b, c, d" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:text="@string/wrongGuess"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
+        app:layout_constraintEnd_toEndOf="@+id/cardView"
+        app:layout_constraintStart_toStartOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

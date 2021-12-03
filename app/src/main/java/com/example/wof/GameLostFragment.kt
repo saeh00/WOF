@@ -8,11 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.Navigation
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GameLostFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameLostFragment : Fragment() {
 
 
@@ -23,9 +18,9 @@ class GameLostFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_game_lost, container, false)
 
-        val playAgainBtn = view.findViewById<Button>(R.id.playAgain)
+        val playAgainBtn = view.findViewById<Button>(R.id.button)
 
-        playAgainBtn.setOnClickListener{
+        playAgainBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_playAgainL)
         }
 

@@ -9,11 +9,6 @@ import android.widget.Button
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
 
-/**
- * A simple [Fragment] subclass.
- * Use the [GameWonFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class GameWonFragment : Fragment() {
 
 
@@ -23,18 +18,20 @@ class GameWonFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_game_won, container, false)
-        val model by lazy { activity?.let { ViewModelProviders.of(it).get(Communicator::class.java) } }
+        val model by lazy {
+            activity?.let {
+                ViewModelProviders.of(it).get(Communicator::class.java)
+            }
+        }
 
         //val testCommunicator = view.findViewById<Button>(R.id.testViewModel)
         val playAgainBtn = view.findViewById<Button>(R.id.playAgain)
 
         //testCommunicator.setOnClickListener{Toast.makeText(activity, model?.points.toString(), Toast.LENGTH_SHORT).show()}
 
-        playAgainBtn.setOnClickListener{
+        playAgainBtn.setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_playAgainW)
         }
-
-
 
         return view
     }

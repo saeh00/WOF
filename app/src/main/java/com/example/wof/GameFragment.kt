@@ -9,6 +9,7 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.RecyclerView
 
 class GameFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -19,11 +20,12 @@ class GameFragment : Fragment() {
     private var guessedLetter = ""
     private var chosenWord = ""
     private var displayWord = ""
-    private var category = ""
     private var lives: Int? = null
     private var points: Int? = null
     private var spinResult: Int? = null
     private var spinResultText = ""
+    private var wrongGuess = mutableListOf<String>()
+    private var correctGuess = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +46,8 @@ class GameFragment : Fragment() {
         val livesText = view.findViewById<TextView>(R.id.livesView)
         val pointsText = view.findViewById<TextView>(R.id.pointView)
         val spinView = view.findViewById<TextView>(R.id.spinResultView)
+        val wrongGuessView = view.findViewById<TextView>(R.id.wrongGuessView)
+
 
         // Initialize the game
         newGame()
@@ -52,7 +56,7 @@ class GameFragment : Fragment() {
 
         unknownWord.text = displayWord
         categoryText.text = category
-        Toast.makeText(activity, chosenWord, Toast.LENGTH_SHORT).show()
+        //Toast.makeText(activity, chosenWord, Toast.LENGTH_SHORT).show()
 
         guessButton.setOnClickListener {
             if (spinState) {
@@ -68,6 +72,7 @@ class GameFragment : Fragment() {
                 livesText.text = lives.toString()
                 pointsText.text = points.toString()
                 spinView.text = spinResultText
+                wrongGuessView.text = wrongGuess.toString()
 
                 unknownWord.text = displayWord
 
@@ -83,8 +88,6 @@ class GameFragment : Fragment() {
                     Navigation.findNavController(view).navigate(R.id.action_gameLost)
                 }
             }
-
-
         }
 
 
@@ -111,9 +114,6 @@ class GameFragment : Fragment() {
         chosenWord = ""
         chosenWord = wordsArr.random()
 
-        category = ""
-        category = catArr.random()
-
         // Turn the length of the array into underscores, to represent the length of the word
         repeat(chosenWord.length) {
             displayWord += "_"
@@ -127,36 +127,39 @@ class GameFragment : Fragment() {
             spinResult = randInt
 
             when (spinResult) {
-                0, 1 -> {// Player loses a life
+                0 -> {// Player loses a life
                     lives = lives?.minus(1)
-                    spinResultText = "Player loses a life"
+                    spinResultText = "You lose a life,\nSpin again!"
                     spinState = true
                 }
-                2, 3 -> {// Player gains a life
+                1 -> {// Player gains a life
                     lives = lives?.plus(1)
-                    spinResultText = "Player gains a life"
+                    spinResultText = "You gain a life,\nSpin again!"
                     spinState = true
                 }
-                4 -> {// Player Loses all points
+                2 -> {// Player Loses all points
                     points = 0
-                    spinResultText = "Player loses all points"
+                    spinResultText =
+                        "You lose all your points (if you have minus points you go to 0 yaaay!),\nSpin again!"
                     spinState = true
                 }
-                6, 7 -> {// Player gains a 1000 points
-                    spinResultText = "Player gains 1000 points"
+                in 3..7 -> {// Player gains a 1000 points
+                    spinResultText = "Player gains 1000 points,\nIf you guess correct though"
                     spinState = false
                 }
-                8, 9 -> {// Player lose 500 points
+                8 -> {// Player lose 500 points
                     points = points?.minus(500)
-                    spinResultText = "Player loses 500 points"
+                    spinResultText = "Player loses 500 points,\nSpin again!"
                     spinState = true
                 }
                 10 -> {// Jackpot! Player gains 10000 points
-                    spinResultText = "Player gains 10000 points"
+                    spinResultText = "Player gains 10000 points,\n" +
+                            "If you guess correct though"
                     spinState = false
                 }
                 else -> {// Standard outcome, player gains 100 points
-                    spinResultText = "Player gains 100 points"
+                    spinResultText = "Player gains 100 points ,\n" +
+                            "If you guess correct though"
                     spinState = false
                 }
             }
@@ -224,7 +227,7 @@ class GameFragment : Fragment() {
         val isGuessOneLetter: Boolean = guessedLetter.length == 1
 
         if (isGuessOneLetter) {
-            if (guessedLetter in chosenWord.lowercase()) {
+            if (guessedLetter in chosenWord.lowercase() && guessedLetter !in correctGuess) {
                 Toast.makeText(activity, "Hurra, you guessed correct", Toast.LENGTH_SHORT).show()
                 displayGuess()
                 when (spinResult) {
@@ -232,11 +235,25 @@ class GameFragment : Fragment() {
                     10 -> points = points?.plus(10000)
                     else -> points = points?.plus(100)
                 }
-            } else {
-                Toast.makeText(activity, "SMH, You guessed incorrect", Toast.LENGTH_SHORT).show()
+                correctGuess.add(guessedLetter)
+            } else if (guessedLetter !in chosenWord.lowercase() && guessedLetter !in correctGuess && guessedLetter !in wrongGuess) {
+                Toast.makeText(
+                    activity,
+                    "You guessed incorrect, you lose a life",
+                    Toast.LENGTH_SHORT
+                ).show()
                 lives = lives?.minus(1)
+
+                wrongGuess.add(guessedLetter)
+            } else {
+                Toast.makeText(
+                    activity,
+                    "You already guessed this letter dummy",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
             }
-            spinResultText = ""
+            spinResultText = "Please spin the wheel"
             spinState = true
         } else {
             Toast.makeText(activity, "Please type one letter!", Toast.LENGTH_SHORT).show()
@@ -251,8 +268,8 @@ class GameFragment : Fragment() {
         }
     }
 
-    private fun checkLoss(){
-        if (lives == 0){
+    private fun checkLoss() {
+        if (lives == 0) {
             gameLoss = true
         }
     }
