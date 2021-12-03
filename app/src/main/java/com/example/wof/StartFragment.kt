@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -26,7 +28,12 @@ class StartFragment : Fragment() {
         val startButton = view.findViewById<Button>(R.id.startButton)
 
         startButton.setOnClickListener {
-            Navigation.findNavController(view).navigate(R.id.action_startGame)
+            if (category != ""){
+                Navigation.findNavController(view).navigate(R.id.action_startGame)
+            } else {
+                Toast.makeText(activity, "Please choose category first", Toast.LENGTH_SHORT).show()
+            }
+
         }
 
         return view

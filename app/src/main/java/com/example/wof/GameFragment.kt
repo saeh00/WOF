@@ -271,12 +271,14 @@ class GameFragment : Fragment() {
 
         if (gameWon) {
             Toast.makeText(activity, "You won", Toast.LENGTH_SHORT).show()
+            category = ""
         }
     }
 
     private fun checkLoss() {
         if (lives == 0) {
             gameLoss = true
+            category = ""
         }
     }
 

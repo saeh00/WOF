@@ -3,13 +3,17 @@
     <string name="guessSpace">Insert a letter!</string>
     <string name="guessButton">Guess!</string>
     <string name="cat">Category:</string>
-    <string name="title">Velkommen til lykkehjulet, drej hjullet for at starte.</string>
+    <string name="welcome">Welcome to the wheel of fortune</string>
     <string name="spin">Spin!</string>
     <string name="win">YOU WIN!</string>
     <string name="lose">YOU LOSE!</string>
     <string name="wrongGuess">Wrong guesses:</string>
     <string name="playAgain">Play Again</string>
     <string name="spinOutcome">Here is where the result of the spin will be displayed. \n Start by pressing spin</string>
+    <string name="rules">Rules:\n \n In this game you have to guess the letters of the secret word.
+        \n Before guessing you have to spin the wheel, and it will decide your fate.
+        \n The goal is to guess the word, and end with as many points as possible.
+        \n Start by picking a category.\n \n Good luck!</string>
 
     <string-array name="category">
         <item>Animals</item>

@@ -3,15 +3,15 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:background="#0000FF"
+    android:background="#BEECDC"
     android:padding="10dp">
 
     <TextView
         android:id="@+id/categoryList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#fff"
         android:foreground="?selectableItemBackground"
+        android:textAlignment="center"
         android:textSize="20sp" />
 
 </LinearLayout>

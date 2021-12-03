@@ -13,9 +13,6 @@
         <action
             android:id="@+id/action_startGame"
             app:destination="@id/gameFragment" />
-        <action
-            android:id="@+id/action_startFragment_to_rulesFragment"
-            app:destination="@id/rulesFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameFragment"
@@ -36,7 +33,7 @@
         tools:layout="@layout/fragment_game_won" >
         <action
             android:id="@+id/action_playAgainW"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/startFragment" />
     </fragment>
     <fragment
         android:id="@+id/gameLostFragment"
@@ -45,11 +42,6 @@
         tools:layout="@layout/fragment_game_lost" >
         <action
             android:id="@+id/action_playAgainL"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/startFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/rulesFragment"
-        android:name="com.example.wof.RulesFragment"
-        android:label="fragment_rules"
-        tools:layout="@layout/fragment_rules" />
 </navigation>
