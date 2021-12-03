@@ -1,2 +1,2 @@
 # WOF
- Individual assignment v3 Wheel Of Fortune
+ Individual assignment Wheel Of Fortune
