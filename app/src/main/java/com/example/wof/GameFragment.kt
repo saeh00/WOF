@@ -97,6 +97,10 @@ class GameFragment : Fragment() {
             spinView.text = spinResultText
             pointsText.text = points.toString()
             livesText.text = lives.toString()
+
+            if (gameLoss){
+                Navigation.findNavController(view).navigate(R.id.action_gameLost)
+            }
         }
 
         return view
